@@ -8,3 +8,88 @@ header {
   padding: 20px;
   color: white;
 }
+
+/* src/App.css */
+.footer {
+  background-color: #282c34;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.social-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  text-decoration: underline;
+}
+
+/* src/App.css */
+.service-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.service-item h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.service-item p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* src/App.css */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+  }
+
+  .service-item {
+    padding: 10px;
+  }
+
+  .footer {
+    padding: 5px;
+  }
+}
+
+/* src/App.css */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+}
+
+form input {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+
+form button {
+  padding: 10px;
+  background-color: #282c34;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #444;
+}

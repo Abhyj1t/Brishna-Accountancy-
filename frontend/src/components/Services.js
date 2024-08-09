@@ -2,6 +2,7 @@
 import React from 'react';
 import ServiceItem from './ServiceItem';
 import ServiceBookingForm from './ServiceBookingForm';
+import './ServiceBookingForm.css';  // Import the CSS for the form
 
 const Services = () => {
   const services = [
@@ -14,9 +15,11 @@ const Services = () => {
   return (
     <div>
       <h1>Our Services</h1>
-      {services.map((service, index) => (
-        <ServiceItem key={index} title={service.title} description={service.description} />
-      ))}
+      <div className="services-container">
+        {services.map((service, index) => (
+          <ServiceItem key={index} title={service.title} description={service.description} />
+        ))}
+      </div>
       <h2>Book a Service</h2>
       <ServiceBookingForm />
     </div>

@@ -1,5 +1,6 @@
 // src/components/ServiceBookingForm.js
 import React, { useState } from 'react';
+import './ServiceBookingForm.css';
 
 const ServiceBookingForm = () => {
   const [formData, setFormData] = useState({
@@ -20,25 +21,23 @@ const ServiceBookingForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" name="name" value={formData.name} onChange={handleChange} />
-      </label>
-      <label>
-        Email:
-        <input type="email" name="email" value={formData.email} onChange={handleChange} />
-      </label>
-      <label>
-        Service:
-        <input type="text" name="service" value={formData.service} onChange={handleChange} />
-      </label>
-      <label>
-        Date:
-        <input type="date" name="date" value={formData.date} onChange={handleChange} />
-      </label>
-      <button type="submit">Book Service</button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} className="booking-form">
+        <div className="form-group">
+          <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="service" placeholder="Service Required" value={formData.service} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+        </div>
+        <button type="submit" className="submit-button">Book Now</button>
+      </form>
+    </div>
   );
 };
 

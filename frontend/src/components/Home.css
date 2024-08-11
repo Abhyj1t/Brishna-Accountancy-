@@ -1,0 +1,43 @@
+/* src/components/Home.css */
+
+.home-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .home-container h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  .home-container p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .button-group {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .home-button {
+    background-color: #f0ad4e;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-button:hover {
+    background-color: #e0993c;
+  }
+  

@@ -1,22 +1,25 @@
-/* src/App.css */
-
-/* General App Styling */
-.App {
+/* General Body Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f4f8;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures the app takes up at least 100% of the viewport height */
+  min-height: 100vh;
 }
 
-/* Main content area should take up all available space */
-.App > .content {
-  flex: 1;
+/* App Container */
+.App {
+  text-align: center;
+  flex: 1; /* Allow App to expand and push footer to the bottom */
 }
 
 /* Header Styling */
 header {
-  background-color: #282c34;
+  background-color: #003366;
   padding: 20px;
   color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Navbar Styling */
@@ -24,160 +27,136 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #282c34;
+  background-color: #003366;
   padding: 10px 20px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.navbar h2 {
-  color: white;
+.navbar-center {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
   margin: 0;
 }
 
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-}
-
-.navbar li {
+.navbar-center li {
   color: white;
 }
 
-.navbar a {
-  color: white;
+.navbar-center a {
+  color: #003366; /* Dark blue text for contrast */
   text-decoration: none;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-/* Services Page Styling */
-.services-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
-
-/* Service Item Styling */
-.service-item {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin: 10px;
+  font-weight: 600;
+  padding: 10px 20px;
   border-radius: 5px;
-  width: 30%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #ffcc00; /* Yellow background */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-item h2 {
-  margin-top: 0;
-  font-size: 1.5rem;
-  color: #333;
+.navbar-center a:hover {
+  background-color: #e6b800; /* Slightly darker yellow on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.service-item p {
-  color: #666;
+.navbar-right {
+  display: flex;
+  gap: 10px;
 }
 
-.service-item:hover {
-  transform: translateY(-5px);
+.login-link, .signup-link {
+  padding: 10px 20px; /* Consistent padding */
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffcc00; /* Yellow background */
+  color: #003366; /* Dark blue text for contrast */
+}
+
+.login-link:hover, .signup-link:hover {
+  background-color: #e6b800;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Home Page Styling */
+.home-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.home-container h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+.home-container p {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #336699;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.home-button {
+  background-color: #ffcc00; /* Yellow background */
+  color: #003366; /* Dark blue text for contrast */
+  padding: 15px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #e6b800;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer Styling */
-.footer {
-  background-color: #282c34;
+footer {
+  background-color: #003366;
+  padding: 10px 20px;
   color: white;
-  padding: 10px;
   text-align: center;
+  margin-top: auto;
   width: 100%;
-  margin-top: auto; /* Ensures the footer is pushed to the bottom */
 }
 
-.social-links a {
-  color: white;
+footer a {
+  color: #ffcc00;
   text-decoration: none;
 }
 
-.social-links a:hover {
+footer a:hover {
+  color: #e6b800;
   text-decoration: underline;
 }
 
-/* Form Styling */
-.form-container {
-  display: flex;
-  justify-content: center;
-  margin: 30px 0;
-}
-
-.booking-form {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 400px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.booking-form input[type="text"],
-.booking-form input[type="email"],
-.booking-form input[type="date"] {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
-  transition: border-color 0.3s;
-}
-
-.booking-form input[type="text"]:focus,
-.booking-form input[type="email"]:focus,
-.booking-form input[type="date"]:focus {
-  border-color: #0066cc;
-  outline: none;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #004d99;
-}
-
-/* Responsive Design */
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .service-item {
-    width: 100%;
-  }
-
-  .booking-form {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .navbar ul {
+  .navbar-center {
     flex-direction: column;
+    gap: 10px;
   }
 
-  .footer {
-    padding: 5px;
+  .navbar-right {
+    justify-content: center;
+    width: 100%;
+    gap: 5px;
   }
 }

@@ -11,7 +11,9 @@ body {
 /* App Container */
 .App {
   text-align: center;
-  flex: 1; /* Allow App to expand and push footer to the bottom */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header Styling */
@@ -130,11 +132,13 @@ header {
 /* Footer Styling */
 footer {
   background-color: #003366;
-  padding: 10px 20px;
+  padding: 20px;
   color: white;
   text-align: center;
   margin-top: auto;
   width: 100%;
+  position: relative;
+  bottom: 0;
 }
 
 footer a {
@@ -159,4 +163,15 @@ footer a:hover {
     width: 100%;
     gap: 5px;
   }
+}
+
+/* Error Handling */
+.error {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
 }

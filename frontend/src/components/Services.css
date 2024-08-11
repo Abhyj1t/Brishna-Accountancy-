@@ -1,93 +1,133 @@
-/* src/components/Services.css */
-
+/* Container for the services section */
 .services-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 40px;
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+/* Heading for the services section */
+.services-heading {
+  font-size: 2.5rem;
+  color: #003366;
+  margin-bottom: 40px;
+}
+
+/* Grid layout for the service cards */
+.services-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Each service card styling */
+.service-card {
+  background-color: white;
+  border: 2px solid #003366;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Service title styling */
+.service-card h3 {
+  font-size: 1.5rem;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+/* Service description styling */
+.service-card p {
+  font-size: 1rem;
+  color: #666666;
+  margin-bottom: 20px;
+}
+
+/* Learn more link styling */
+.learn-more-link {
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #003366;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.learn-more-link:hover {
+  background-color: #002244;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Booking Form Styling */
+.booking-form-container {
+  background-color: white;
+  border: 2px solid #003366;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 40px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form-container h3 {
+  font-size: 1.8rem;
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+.booking-form .form-group {
+  margin-bottom: 20px;
+}
+
+.booking-form input[type="text"],
+.booking-form input[type="email"],
+.booking-form input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #003366;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.booking-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #003366;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.booking-form button:hover {
+  background-color: #002244;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .services-grid {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .services-left, .services-right {
-    width: 48%;
-  }
-  
-  .services-title, .booking-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
+
   .service-card {
-    background-color: #f7f7f7;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
   }
-  
-  .service-card h3 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+
+  .booking-form-container {
+    max-width: 100%;
+    margin: 20px auto;
   }
-  
-  .service-card p {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    color: #666;
-  }
-  
-  .booking-form {
-    background-color: #f7f7f7;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .booking-form input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-  }
-  
-  .booking-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .booking-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .booking-title {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .services-container {
-      flex-direction: column;
-    }
-  
-    .services-left, .services-right {
-      width: 100%;
-    }
-  }
-  
+}

@@ -1,10 +1,9 @@
-/* src/components/Navbar.css */
-
+/* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #00509e;
+  background-color: #003366;
   padding: 10px 20px;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -14,7 +13,7 @@
   list-style: none;
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 15px;
   padding: 0;
   margin: 0;
 }
@@ -24,17 +23,17 @@
 }
 
 .navbar-center a {
-  color: white;
+  color: #003366; /* Dark blue text */
   text-decoration: none;
   font-weight: 600;
   padding: 10px 20px;
   border-radius: 5px;
-  background-color: #1a73e8;
+  background-color: #ffcc00; /* Bright yellow background */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar-center a:hover {
-  background-color: #0c56d0;
+  background-color: #e6b800; /* Slightly darker yellow on hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -44,34 +43,21 @@
 }
 
 .login-link, .signup-link {
-  padding: 8px 20px;
+  padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
   font-weight: 600;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffcc00; /* Bright yellow background */
+  color: #003366; /* Dark blue text */
 }
 
-.login-link {
-  background-color: transparent;
-  color: #1a73e8;
-  border: 1px solid #1a73e8;
-}
-
-.signup-link {
-  background-color: #1a73e8;
-  color: white;
-}
-
-.login-link:hover {
-  background-color: #0c56d0;
+.login-link:hover, .signup-link:hover {
+  background-color: #e6b800;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.signup-link:hover {
-  background-color: #0c56d0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
 
 /* Responsive Navbar */
 @media (max-width: 768px) {

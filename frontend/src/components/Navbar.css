@@ -1,14 +1,17 @@
-/* Navbar Styling */
+/* src/components/Navbar.css */
+
+/* General Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #003366;
+  background-color: #003366; /* Dark blue background */
   padding: 10px 20px;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Centered Navigation Links */
 .navbar-center {
   list-style: none;
   display: flex;
@@ -18,25 +21,31 @@
   margin: 0;
 }
 
-.navbar-center li {
-  color: white;
-}
-
-.navbar-center a {
+/* Navigation Link Styling */
+.nav-link {
   color: #003366; /* Dark blue text */
   text-decoration: none;
   font-weight: 600;
   padding: 10px 20px;
   border-radius: 5px;
-  background-color: #ffcc00; /* Bright yellow background */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffcc00; /* Yellow background */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.navbar-center a:hover {
+.nav-link:hover {
   background-color: #e6b800; /* Slightly darker yellow on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
+/* Active Link Styling */
+.active-link {
+  background-color: #ffcc00; /* Highlight active link with yellow background */
+  color: white; /* White text for the active link */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a slight shadow to make it pop */
+}
+
+/* Right-Side Navigation (Login and Signup) */
 .navbar-right {
   display: flex;
   gap: 10px;
@@ -48,18 +57,17 @@
   text-decoration: none;
   font-weight: 600;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  background-color: #ffcc00; /* Bright yellow background */
-  color: #003366; /* Dark blue text */
+  background-color: #ffcc00; /* Yellow background */
+  color: #003366; /* Dark blue text for contrast */
 }
 
 .login-link:hover, .signup-link:hover {
-  background-color: #e6b800;
+  background-color: #e6b800; /* Slightly darker yellow on hover */
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
-
-/* Responsive Navbar */
+/* Responsive Styles */
 @media (max-width: 768px) {
   .navbar-center {
     flex-direction: column;

@@ -1,0 +1,31 @@
+/* Footer Styles */
+.footer {
+    background-color: #003366; /* Dark blue background */
+    color: white; /* White text */
+    text-align: center; /* Center text alignment */
+    padding: 20px 0; /* Padding for top and bottom */
+    position: relative; /* Ensures footer stays at the bottom */
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
+  .footer .social-links {
+    margin-top: 10px;
+  }
+  
+  .footer .social-links a {
+    color: #ffcc00; /* Yellow color for links */
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer .social-links a:hover {
+    color: #e6b800; /* Slightly darker yellow on hover */
+  }
+  

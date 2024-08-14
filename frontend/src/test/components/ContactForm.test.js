@@ -1,44 +1,57 @@
-// test/components/ContactForm.test.js
+// src/components/ContactForm.test.js
+
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import ContactForm from '../../src/components/ContactForm';
+import '@testing-library/jest-dom/extend-expect';
+import ContactForm from '../../components/ContactForm';
 
-describe('ContactForm', () => {
-  beforeEach(() => {
+describe('ContactForm Component', () => {
+  
+  // Test if the component renders correctly
+  test('renders ContactForm component', () => {
     render(<ContactForm />);
-  });
-
-  test('renders the form fields correctly', () => {
-    // Check if the form fields are rendered
+    
+    // Check if the form and its elements are rendered
     expect(screen.getByPlaceholderText('Full Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Your Message')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /send message/i })).toBeInTheDocument();
+  });
+  
+  // Test if inputs are updated correctly
+  test('updates input values on change', () => {
+    render(<ContactForm />);
+    
+    const nameInput = screen.getByPlaceholderText('Full Name');
+    const emailInput = screen.getByPlaceholderText('Email Address');
+    const messageInput = screen.getByPlaceholderText('Your Message');
+    
+    fireEvent.change(nameInput, { target: { value: 'John Doe' } });
+    fireEvent.change(emailInput, { target: { value: 'john.doe@example.com' } });
+    fireEvent.change(messageInput, { target: { value: 'Hello, this is a test message.' } });
+    
+    expect(nameInput.value).toBe('John Doe');
+    expect(emailInput.value).toBe('john.doe@example.com');
+    expect(messageInput.value).toBe('Hello, this is a test message.');
   });
 
-  test('allows the user to fill out the form', () => {
-    // Simulate user typing in the form fields
-    userEvent.type(screen.getByPlaceholderText('Full Name'), 'John Doe');
-    userEvent.type(screen.getByPlaceholderText('Email Address'), 'john.doe@example.com');
-    userEvent.type(screen.getByPlaceholderText('Your Message'), 'Hello, this is a test message.');
-
-    // Check if the input values are updated
-    expect(screen.getByPlaceholderText('Full Name').value).toBe('John Doe');
-    expect(screen.getByPlaceholderText('Email Address').value).toBe('john.doe@example.com');
-    expect(screen.getByPlaceholderText('Your Message').value).toBe('Hello, this is a test message.');
-  });
-
-  test('submits the form and displays an alert', () => {
-    // Mock the global alert function
+  // Test form submission
+  test('shows alert with message on form submit', () => {
+    // Mock the alert function
     global.alert = jest.fn();
 
-    // Simulate user typing and form submission
-    userEvent.type(screen.getByPlaceholderText('Full Name'), 'John Doe');
-    userEvent.type(screen.getByPlaceholderText('Email Address'), 'john.doe@example.com');
-    userEvent.type(screen.getByPlaceholderText('Your Message'), 'Hello, this is a test message.');
-    userEvent.click(screen.getByText('Send Message'));
-
-    // Check if alert is called with the correct message
+    render(<ContactForm />);
+    
+    // Fill out the form
+    fireEvent.change(screen.getByPlaceholderText('Full Name'), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByPlaceholderText('Email Address'), { target: { value: 'john.doe@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Your Message'), { target: { value: 'Hello, this is a test message.' } });
+    
+    // Submit the form
+    fireEvent.click(screen.getByRole('button', { name: /send message/i }));
+    
+    // Check if the alert was called with the correct message
     expect(global.alert).toHaveBeenCalledWith('Message sent: Hello, this is a test message.');
   });
+  
 });

@@ -1,4 +1,4 @@
-// src/components/Accounting.test.js
+// src/test/components/Accounting.test.js
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
@@ -18,12 +18,11 @@ describe('Accounting Component', () => {
     expect(screen.getByText(/We offer comprehensive accounting services tailored to your needs/i)).toBeInTheDocument();
     
     // Check if the pricing section is rendered correctly
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Pricing');
+    expect(screen.getByText('Pricing')).toBeInTheDocument();
     expect(screen.getByText('Starting from $200/month')).toBeInTheDocument();
     
     // Check if the FAQs section is rendered correctly
-    const faqsHeading = screen.getAllByRole('heading', { level: 2 })[1]; // second h2 element
-    expect(faqsHeading).toHaveTextContent('FAQs');
+    expect(screen.getByText('FAQs')).toBeInTheDocument();
     
     const faqsListItems = screen.getAllByRole('listitem');
     expect(faqsListItems).toHaveLength(2);

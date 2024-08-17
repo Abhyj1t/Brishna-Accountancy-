@@ -1,43 +1,111 @@
-/* src/components/Home.css */
-
+/* Home Page Styling */
 .home-container {
-  text-align: center;
-  margin-top: 50px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
 }
 
 .home-container h1 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
   font-size: 2.5rem;
   color: #003366;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.home-container h2 {
+  font-size: 2rem;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.home-container h3 {
+  font-size: 1.5rem;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.home-container h4 {
+  font-size: 1.25rem;
+  color: #003366;
+  margin-bottom: 15px;
 }
 
 .home-container p {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: 1.2rem;
-  color: #336699;
+  color: #333;
+  margin-bottom: 15px;
 }
 
-.button-group {
+.home-container ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.home-container li {
+  margin-bottom: 10px;
+  color: #003366;
+}
+
+.home-container a {
+  color: #003366;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.home-container a:hover {
+  color: #00509e;
+  text-decoration: none;
+}
+
+.home-container .services-list {
+  margin-top: 20px;
+}
+
+.home-container .services-list li {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.home-container .opening-hours {
+  font-weight: bold;
+}
+
+.home-container .mission {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-container .mission h2 {
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+.home-container .mission p {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.home-container .get-in-touch {
   margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  text-align: center;
 }
 
-.home-button {
-  background-color: #e8e51a;
-  color: white;
-  padding: 15px 30px;
+.home-container .get-in-touch a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #003366;
+  color: #fff;
   border-radius: 5px;
   text-decoration: none;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.home-button:hover {
-  background-color: #0c56d0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.home-container .get-in-touch a:hover {
+  background-color: #00509e;
 }

@@ -1,48 +1,80 @@
-const { Pool } = require('pg');
 const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const dotenv = require('dotenv');
-
-// Load environment variables
-dotenv.config();
+const pool = require('./db'); // Import the PostgreSQL connection pool
+const cors = require('cors'); // If you're handling requests from a different frontend, this helps avoid CORS issues
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
+// Middleware
+app.use(cors()); // Allow Cross-Origin requests (important if frontend is hosted separately)
+app.use(bodyParser.json()); // Parse incoming JSON requests
 
-// PostgreSQL connection
-const pool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-});
-
-// Test the database connection
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.stack);
-  } else {
-    console.log('Connected to the database:', res.rows[0]);
-  }
-});
-
-// Basic route
-app.get('/', (req, res) => {
-  res.send('Welcome to the backend!');
-});
-
-// Export the app for testing
-module.exports = app;
-
-// Start the server only if not in test environment
-if (require.main === module) {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+// Route to get all bookings
+app.get('/api/bookings', (req, res) => {
+  pool.query('SELECT * FROM bookings', (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      res.status(500).json({ error: 'Database error' });
+    } else {
+      res.json(result.rows);
+    }
   });
-}
+});
+
+// Route to create a new booking
+app.post('/api/bookings', (req, res) => {
+  const { name, email, service, booking_date, booking_time } = req.body;
+  pool.query(
+    'INSERT INTO bookings (name, email, service, booking_date, booking_time) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+    [name, email, service, booking_date, booking_time],
+    (err, result) => {
+      if (err) {
+        console.error('Error executing query:', err.stack);
+        res.status(500).json({ error: 'Database error' });
+      } else {
+        res.status(201).json(result.rows[0]);
+      }
+    }
+  );
+});
+
+// Route to delete a booking by ID
+app.delete('/api/bookings/:id', (req, res) => {
+  const { id } = req.params;
+  pool.query('DELETE FROM bookings WHERE id = $1 RETURNING *', [id], (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      res.status(500).json({ error: 'Database error' });
+    } else if (result.rows.length === 0) {
+      res.status(404).json({ error: 'Booking not found' });
+    } else {
+      res.status(200).json(result.rows[0]);
+    }
+  });
+});
+
+// Route to update a booking by ID
+app.put('/api/bookings/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, email, service, booking_date, booking_time } = req.body;
+  pool.query(
+    'UPDATE bookings SET name = $1, email = $2, service = $3, booking_date = $4, booking_time = $5 WHERE id = $6 RETURNING *',
+    [name, email, service, booking_date, booking_time, id],
+    (err, result) => {
+      if (err) {
+        console.error('Error executing query:', err.stack);
+        res.status(500).json({ error: 'Database error' });
+      } else if (result.rows.length === 0) {
+        res.status(404).json({ error: 'Booking not found' });
+      } else {
+        res.status(200).json(result.rows[0]);
+      }
+    }
+  );
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(Server running on port ${PORT});
+});

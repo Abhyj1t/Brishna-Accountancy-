@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const pool = require('./db'); // Import the PostgreSQL connection pool
 const cors = require('cors'); // If you're handling requests from a different frontend, this helps avoid CORS issues
 const bodyParser = require('body-parser');
@@ -68,6 +68,24 @@ app.put('/api/bookings/:id', (req, res) => {
         res.status(404).json({ error: 'Booking not found' });
       } else {
         res.status(200).json(result.rows[0]);
+      }
+    }
+  );
+});
+
+// Route to handle contact form submission (NEW ROUTE)
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+
+  pool.query(
+    'INSERT INTO contact_messages (name, email, message) VALUES ($1, $2, $3) RETURNING *',
+    [name, email, message],
+    (err, result) => {
+      if (err) {
+        console.error('Error storing message:', err.stack);
+        res.status(500).json({ error: 'Database error' });
+      } else {
+        res.status(201).json({ message: 'Message sent successfully!' });
       }
     }
   );

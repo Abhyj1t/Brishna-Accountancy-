@@ -50,3 +50,9 @@
 .submit-button:hover {
   background-color: #003d82;
 }
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+}

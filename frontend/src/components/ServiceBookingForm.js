@@ -6,60 +6,100 @@ const ServiceBookingForm = () => {
     name: '',
     email: '',
     service: '',
-    date: ''
+    booking_date: '',
+    booking_time: '',
   });
+
+  const [responseMessage, setResponseMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const bookingData = {
-      name: formData.name,
-      email: formData.email,
-      service: formData.service,
-      booking_date: formData.date,  // Ensure these fields match your backend
-      booking_time: formData.time   // Add booking_time field if required
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/bookings', { // Point to backend on port 5000
+      const response = await fetch('http://localhost:5000/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        alert('Booking successful!');
-        setFormData({ name: '', email: '', service: '', date: '' });
+        setResponseMessage('Booking successfully created!');
+        setFormData({
+          name: '',
+          email: '',
+          service: '',
+          booking_date: '',
+          booking_time: '',
+        });
       } else {
-        console.error('Booking failed');
+        setResponseMessage('Failed to create the booking. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
+      setResponseMessage('An error occurred. Please try again later.');
     }
   };
 
   return (
     <div className="form-container">
+      <h2>Book a Service</h2>
       <form onSubmit={handleSubmit} className="booking-form">
         <div className="form-group">
-          <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="form-group">
-          <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="form-group">
-          <input type="text" name="service" placeholder="Service Required" value={formData.service} onChange={handleChange} required />
+          <input
+            type="text"
+            name="service"
+            placeholder="Service Required"
+            value={formData.service}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="form-group">
-          <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+          <input
+            type="date"
+            name="booking_date"
+            value={formData.booking_date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="time"
+            name="booking_time"
+            value={formData.booking_time}
+            onChange={handleChange}
+            required
+          />
         </div>
         <button type="submit" className="submit-button">Book Now</button>
+        {responseMessage && <p>{responseMessage}</p>}
       </form>
     </div>
   );

@@ -7,16 +7,38 @@ const Contact = () => {
     email: '',
     message: ''
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Here you would send the form data to the backend, for now, we'll just display a success message
+
+    const contactData = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', { // Point to backend on port 5000
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully!');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        console.error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -54,8 +76,6 @@ const Contact = () => {
         </div>
         <button type="submit" className="submit-button">Send Message</button>
       </form>
-
-      {submitted && <p className="success-message">Message sent successfully! We will get back to you soon.</p>}
     </div>
   );
 };

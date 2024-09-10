@@ -1,13 +1,19 @@
 const express = require('express'); 
 const pool = require('./db'); // Import the PostgreSQL connection pool
-const cors = require('cors'); 
+const cors = require('cors');  // Import CORS
 const bodyParser = require('body-parser');
 
 const app = express();
 
+// Enable CORS (Allow requests from frontend running on port 3000)
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow requests from frontend (port 3000)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true // Allow credentials like cookies or headers
+}));
+
 // Middleware
-app.use(cors()); 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json()); // Parse incoming JSON requests
 
 // Route to get all bookings
 app.get('/api/bookings', (req, res) => {

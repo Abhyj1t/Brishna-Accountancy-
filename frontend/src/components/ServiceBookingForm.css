@@ -1,8 +1,8 @@
 /* src/components/ServiceBookingForm.css */
 
 .form-container {
-  max-width: 500px; /* Increased the max-width */
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 0 auto; /* Center the form */
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -20,21 +20,21 @@
 
 .form-group input {
   width: 100%;
-  padding: 12px; /* Increased padding for larger input fields */
-  font-size: 1.1rem; /* Slightly larger font size */
+  padding: 12px;
+  font-size: 1.1rem;
   border-radius: 5px;
   border: 1px solid #ddd;
   transition: border-color 0.3s ease;
 }
 
 .form-group input:focus {
-  border-color: #0056b3; /* Change border color on focus */
-  outline: none; /* Remove default outline */
+  border-color: #0056b3;
+  outline: none;
 }
 
 .submit-button {
-  padding: 15px; /* Increased padding for larger button */
-  font-size: 1.1rem; /* Slightly larger font size */
+  padding: 15px;
+  font-size: 1.1rem;
   font-weight: bold;
   background-color: #0056b3;
   color: #fff;

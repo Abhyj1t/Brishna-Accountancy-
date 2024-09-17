@@ -1,4 +1,3 @@
-// src/components/ContactForm.js
 import React, { useState } from 'react';
 import './ContactForm.css';
 
@@ -6,27 +5,36 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
+
+  const [responseMessage, setResponseMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Message sent: ${formData.message}`);
-    // Send form data to the backend or email service here
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Example: Simulate a successful submission
+    setResponseMessage('Message sent successfully!');
+    setFormData({
+      name: '',
+      email: '',
+      message: '',
+    });
   };
 
   return (
     <div className="contact-form-container">
+      <h2>Contact Us</h2>
       <form onSubmit={handleSubmit} className="contact-form">
         <div className="form-group">
           <input
             type="text"
             name="name"
-            placeholder="Full Name"
+            placeholder="Name"
             value={formData.name}
             onChange={handleChange}
             required
@@ -36,7 +44,7 @@ const ContactForm = () => {
           <input
             type="email"
             name="email"
-            placeholder="Email Address"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -45,15 +53,14 @@ const ContactForm = () => {
         <div className="form-group">
           <textarea
             name="message"
-            placeholder="Your Message"
+            placeholder="Message"
             value={formData.message}
             onChange={handleChange}
             required
-          ></textarea>
+          />
         </div>
-        <button type="submit" className="submit-button">
-          Send Message
-        </button>
+        <button type="submit" className="submit-button">Send Message</button>
+        {responseMessage && <p className={`response-message ${responseMessage.includes('successfully') ? 'success-message' : 'error-message'}`}>{responseMessage}</p>}
       </form>
     </div>
   );

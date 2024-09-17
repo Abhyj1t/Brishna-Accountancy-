@@ -48,7 +48,6 @@ const ServiceBookingForm = () => {
 
   return (
     <div className="form-container">
-      <h2>Book a Service</h2>
       <form onSubmit={handleSubmit} className="booking-form">
         <div className="form-group">
           <input

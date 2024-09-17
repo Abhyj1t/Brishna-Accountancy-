@@ -1,5 +1,7 @@
+/* src/components/ServiceBookingForm.css */
+
 .form-container {
-  max-width: 400px;
+  max-width: 500px; /* Increased the max-width */
   margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f4;
@@ -18,26 +20,21 @@
 
 .form-group input {
   width: 100%;
-  padding: 10px;
-  font-size: 1rem;
+  padding: 12px; /* Increased padding for larger input fields */
+  font-size: 1.1rem; /* Slightly larger font size */
   border-radius: 5px;
   border: 1px solid #ddd;
   transition: border-color 0.3s ease;
 }
 
-.form-group input.error {
-  border-color: red;
-}
-
-.error-text {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 5px;
+.form-group input:focus {
+  border-color: #0056b3; /* Change border color on focus */
+  outline: none; /* Remove default outline */
 }
 
 .submit-button {
-  padding: 12px;
-  font-size: 1rem;
+  padding: 15px; /* Increased padding for larger button */
+  font-size: 1.1rem; /* Slightly larger font size */
   font-weight: bold;
   background-color: #0056b3;
   color: #fff;
@@ -51,8 +48,16 @@
   background-color: #003d82;
 }
 
+.response-message {
+  margin-top: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .success-message {
   color: green;
-  font-weight: bold;
-  margin-top: 15px;
+}
+
+.error-message {
+  color: red;
 }

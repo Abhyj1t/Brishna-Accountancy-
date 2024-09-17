@@ -99,7 +99,7 @@ const ServiceBookingForm = () => {
           />
         </div>
         <button type="submit" className="submit-button">Book Now</button>
-        {responseMessage && <p>{responseMessage}</p>}
+        {responseMessage && <p className={`response-message ${responseMessage.includes('successfully') ? 'success-message' : 'error-message'}`}>{responseMessage}</p>}
       </form>
     </div>
   );

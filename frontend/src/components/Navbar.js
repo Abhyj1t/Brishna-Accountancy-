@@ -9,10 +9,9 @@ const Navbar = () => {
       <ul className="navbar-center">
         <li>
           <NavLink 
-            exact 
+            exact="true" // Use exact="true" for React Router v6 and above
             to="/" 
-            activeClassName="active-link" 
-            className="nav-link"
+            className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
           >
             Home
           </NavLink>
@@ -20,8 +19,7 @@ const Navbar = () => {
         <li>
           <NavLink 
             to="/services" 
-            activeClassName="active-link" 
-            className="nav-link"
+            className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
           >
             Services
           </NavLink>
@@ -29,8 +27,7 @@ const Navbar = () => {
         <li>
           <NavLink 
             to="/contact" 
-            activeClassName="active-link" 
-            className="nav-link"
+            className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
           >
             Contact
           </NavLink>
@@ -39,15 +36,13 @@ const Navbar = () => {
       <div className="navbar-right">
         <NavLink 
           to="/login" 
-          activeClassName="active-link" 
-          className="login-link"
+          className={({ isActive }) => (isActive ? "login-link active-link" : "login-link")}
         >
           Login
         </NavLink>
         <NavLink 
           to="/signup" 
-          activeClassName="active-link" 
-          className="signup-link"
+          className={({ isActive }) => (isActive ? "signup-link active-link" : "signup-link")}
         >
           Sign Up
         </NavLink>

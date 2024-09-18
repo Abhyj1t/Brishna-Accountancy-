@@ -1,8 +1,8 @@
-// src/components/LoginForm.js
+// src/components/Login.js
 import React, { useState } from 'react';
-import './LoginForm.css';
+import './Login.css';
 
-const LoginForm = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -74,4 +74,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Login;

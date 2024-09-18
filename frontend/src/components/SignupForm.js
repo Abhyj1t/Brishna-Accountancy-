@@ -1,8 +1,8 @@
-// src/components/Signup.js
+// src/components/SignupForm.js
 import React, { useState } from 'react';
-import './Signup.css';
+import './SignupForm.css';
 
-const Signup = () => {
+const SignupForm = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -86,4 +86,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupForm;

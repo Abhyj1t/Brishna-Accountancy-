@@ -1,10 +1,9 @@
-// src/components/Signup.js
+// src/components/LoginForm.js
 import React, { useState } from 'react';
-import './Signup.css';
+import './LoginForm.css';
 
-const Signup = () => {
+const LoginForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: ''
   });
@@ -19,7 +18,7 @@ const Signup = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://192.168.124.102:5000/api/signup', {
+      const response = await fetch('http://192.168.124.102:5000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +30,6 @@ const Signup = () => {
         const result = await response.json();
         setResponseMessage(result.message);
         setFormData({
-          username: '',
           email: '',
           password: ''
         });
@@ -47,18 +45,8 @@ const Signup = () => {
 
   return (
     <div className="form-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit} className="signup-form">
-        <div className="form-group">
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <input
             type="email"
@@ -79,11 +67,11 @@ const Signup = () => {
             required
           />
         </div>
-        <button type="submit" className="submit-button">Sign Up</button>
+        <button type="submit" className="submit-button">Login</button>
         {responseMessage && <p>{responseMessage}</p>}
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default LoginForm;

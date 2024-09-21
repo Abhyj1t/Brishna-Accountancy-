@@ -17,19 +17,35 @@ const ContactForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Example: Simulate a successful submission
-    setResponseMessage('Message sent successfully!');
-    setFormData({
-      name: '',
-      email: '',
-      message: '',
-    });
+    try {
+      const response = await fetch('http://localhost:5001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setResponseMessage('Message sent successfully!');
+        setFormData({
+          name: '',
+          email: '',
+          message: '',
+        });
+      } else {
+        setResponseMessage('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setResponseMessage('An error occurred. Please try again later.');
+    }
   };
 
   return (
-    <div className="contact-form-container">
-      <h2>Contact Us</h2>
-      <form onSubmit={handleSubmit} className="contact-form">
+    <div className="form-container">
+      <h2 className="form-heading">Contact Us</h2>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             type="text"
@@ -60,7 +76,7 @@ const ContactForm = () => {
           />
         </div>
         <button type="submit" className="submit-button">Send Message</button>
-        {responseMessage && <p className={`response-message ${responseMessage.includes('successfully') ? 'success-message' : 'error-message'}`}>{responseMessage}</p>}
+        {responseMessage && <p>{responseMessage}</p>}
       </form>
     </div>
   );

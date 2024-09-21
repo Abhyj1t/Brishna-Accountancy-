@@ -8,19 +8,44 @@ const SignupForm = () => {
     password: '',
   });
 
+  const [responseMessage, setResponseMessage] = useState('');
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add backend API call logic here
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5001/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setResponseMessage('Signup successful!');
+        setFormData({
+          username: '',
+          email: '',
+          password: '',
+        });
+      } else {
+        setResponseMessage('Failed to sign up. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setResponseMessage('An error occurred. Please try again later.');
+    }
   };
 
   return (
     <div className="form-container">
       <h2 className="form-heading">Sign Up</h2>
-      <form onSubmit={handleSubmit} className="signup-form">
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             type="text"
@@ -52,6 +77,7 @@ const SignupForm = () => {
           />
         </div>
         <button type="submit" className="submit-button">Sign Up</button>
+        {responseMessage && <p>{responseMessage}</p>}
       </form>
     </div>
   );

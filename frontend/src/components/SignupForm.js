@@ -1,53 +1,25 @@
-// src/components/SignupForm.js
 import React, { useState } from 'react';
-import './Signup.css';
+import './SignupForm.css';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
   });
-
-  const [responseMessage, setResponseMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch('http://192.168.124.102:5000/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        setResponseMessage(result.message);
-        setFormData({
-          username: '',
-          email: '',
-          password: ''
-        });
-      } else {
-        const errorResult = await response.json();
-        setResponseMessage(errorResult.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setResponseMessage('An error occurred. Please try again later.');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add backend API call logic here
   };
 
   return (
     <div className="form-container">
-      <h2>Sign Up</h2>
+      <h2 className="form-heading">Sign Up</h2>
       <form onSubmit={handleSubmit} className="signup-form">
         <div className="form-group">
           <input
@@ -80,7 +52,6 @@ const SignupForm = () => {
           />
         </div>
         <button type="submit" className="submit-button">Sign Up</button>
-        {responseMessage && <p>{responseMessage}</p>}
       </form>
     </div>
   );

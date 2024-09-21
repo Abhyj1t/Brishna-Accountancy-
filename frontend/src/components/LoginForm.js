@@ -1,51 +1,24 @@
-// src/components/LoginForm.js
 import React, { useState } from 'react';
-import './Login.css';
+import './LoginForm.css';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
-
-  const [responseMessage, setResponseMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch('http://192.168.124.102:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        setResponseMessage(result.message);
-        setFormData({
-          email: '',
-          password: ''
-        });
-      } else {
-        const errorResult = await response.json();
-        setResponseMessage(errorResult.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setResponseMessage('An error occurred. Please try again later.');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add backend API call logic here
   };
 
   return (
     <div className="form-container">
-      <h2>Login</h2>
+      <h2 className="form-heading">Login</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <input
@@ -68,7 +41,6 @@ const LoginForm = () => {
           />
         </div>
         <button type="submit" className="submit-button">Login</button>
-        {responseMessage && <p>{responseMessage}</p>}
       </form>
     </div>
   );

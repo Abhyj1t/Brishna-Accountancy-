@@ -1,12 +1,16 @@
-/* src/components/ServiceBookingForm.css */
-
 .form-container {
   max-width: 500px;
-  margin: 0 auto; /* Center the form */
+  margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .booking-form {
@@ -21,20 +25,15 @@
 .form-group input {
   width: 100%;
   padding: 12px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-radius: 5px;
   border: 1px solid #ddd;
   transition: border-color 0.3s ease;
 }
 
-.form-group input:focus {
-  border-color: #0056b3;
-  outline: none;
-}
-
 .submit-button {
-  padding: 15px;
-  font-size: 1.1rem;
+  padding: 12px;
+  font-size: 1rem;
   font-weight: bold;
   background-color: #0056b3;
   color: #fff;
@@ -48,16 +47,14 @@
   background-color: #003d82;
 }
 
-.response-message {
-  margin-top: 15px;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
 .success-message {
   color: green;
+  font-weight: bold;
+  margin-top: 15px;
 }
 
 .error-message {
   color: red;
+  font-weight: bold;
+  margin-top: 15px;
 }

@@ -20,7 +20,7 @@ const ServiceBookingForm = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5001/api/bookings', {
+      const response = await fetch('http://localhost:5000/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,6 @@ const ServiceBookingForm = () => {
 
   return (
     <div className="form-container">
-      <h2>Book a Service</h2>
       <form onSubmit={handleSubmit} className="booking-form">
         <div className="form-group">
           <input
@@ -99,11 +98,7 @@ const ServiceBookingForm = () => {
           />
         </div>
         <button type="submit" className="submit-button">Book Now</button>
-        {responseMessage && (
-          <p className={`response-message ${responseMessage.includes('successfully') ? 'success-message' : 'error-message'}`}>
-            {responseMessage}
-          </p>
-        )}
+        {responseMessage && <p className={`response-message ${responseMessage.includes('successfully') ? 'success-message' : 'error-message'}`}>{responseMessage}</p>}
       </form>
     </div>
   );

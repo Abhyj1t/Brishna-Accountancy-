@@ -1,5 +1,5 @@
-// src/components/LoginForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import './LoginForm.css';
 
 const LoginForm = () => {
@@ -9,6 +9,7 @@ const LoginForm = () => {
   });
 
   const [responseMessage, setResponseMessage] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +19,7 @@ const LoginForm = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5001/api/login', { // Ensure this URL matches your backend route
+      const response = await fetch('http://localhost:5001/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,18 +28,13 @@ const LoginForm = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        // Remove the unused 'data' variable
         setResponseMessage('Login successful!');
-        // You can store the token received from the backend for future authenticated requests
-        // localStorage.setItem('token', data.token); // Uncomment if you plan to use JWT
-        // Reset form data after successful login
-        setFormData({
-          email: '',
-          password: '',
-        });
+        
+        // Redirect to services page after successful login
+        navigate('/services');
       } else {
-        const errorData = await response.json();
-        setResponseMessage(errorData.message || 'Failed to login. Please try again.');
+        setResponseMessage('Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -48,7 +44,7 @@ const LoginForm = () => {
 
   return (
     <div className="form-container">
-      <h2 className="form-heading">Login</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <input

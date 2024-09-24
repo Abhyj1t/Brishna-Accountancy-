@@ -1,10 +1,16 @@
 .form-container {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .booking-form {
@@ -18,21 +24,11 @@
 
 .form-group input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
   border-radius: 5px;
   border: 1px solid #ddd;
   transition: border-color 0.3s ease;
-}
-
-.form-group input.error {
-  border-color: red;
-}
-
-.error-text {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 5px;
 }
 
 .submit-button {
@@ -49,4 +45,16 @@
 
 .submit-button:hover {
   background-color: #003d82;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 15px;
 }

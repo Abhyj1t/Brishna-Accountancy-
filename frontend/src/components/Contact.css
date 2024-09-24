@@ -1,18 +1,39 @@
-/* src/components/Contact.css */
-.contact-page {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .contact-page h1 {
-    color: #003366;
-    margin-bottom: 20px;
-  }
-  
-  .contact-page p {
-    color: #555555;
-    margin-bottom: 40px;
-  }
-  
+.contact-form-container {
+  text-align: center;
+  margin: 50px auto;
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  background-color: #003366;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #002244;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 20px;
+}

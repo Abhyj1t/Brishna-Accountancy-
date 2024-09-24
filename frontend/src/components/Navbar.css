@@ -1,17 +1,18 @@
-/* src/components/Navbar.css */
+/* Updated Navbar CSS */
 
 /* General Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #003366; /* Dark blue background */
-  padding: 10px 20px;
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: absolute; /* Position navbar over the background */
+  width: 100%;
+  background-color: transparent; /* Make the navbar transparent */
+  z-index: 10; /* Ensure the navbar is on top */
+  top: 0; /* Stick it at the top */
 }
 
-/* Centered Navigation Links */
 .navbar-center {
   list-style: none;
   display: flex;
@@ -23,26 +24,25 @@
 
 /* Navigation Link Styling */
 .nav-link {
-  color: #003366; /* Dark blue text */
+  color: #fff; /* White text */
   text-decoration: none;
   font-weight: 600;
   padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #ffcc00; /* Yellow background */
   transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: transparent; /* Transparent background for links */
 }
 
 .nav-link:hover {
-  background-color: #e6b800; /* Slightly darker yellow on hover */
+  background-color: rgba(255, 204, 0, 0.7); /* Slightly darker yellow on hover */
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  border-radius: 5px;
 }
 
 /* Active Link Styling */
 .active-link {
-  background-color: #ffcc00; /* Highlight active link with yellow background */
-  color: white; /* White text for the active link */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a slight shadow to make it pop */
+  background-color: rgba(255, 204, 0, 0.7); /* Yellow background for active links */
+  color: white;
+  border-radius: 5px;
 }
 
 /* Right-Side Navigation (Login and Signup) */

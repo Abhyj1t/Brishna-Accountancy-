@@ -1,15 +1,18 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';  // Import the Footer component
+import Footer from './components/Footer'; 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Services from './components/Services';
-import Contact from './components/Contact'; // Ensure this is imported
+import Contact from './components/Contact'; 
 import Header from './components/Header';
 import TaxPreparation from './components/TaxPreparation';
 import Accounting from './components/Accounting';
 import BusinessConsulting from './components/BusinessConsulting';
+import SignupForm from './components/SignupForm';  // Import SignupForm
+import LoginForm from './components/LoginForm';    // Import LoginForm
+
 
 function App() {
   return (
@@ -23,9 +26,11 @@ function App() {
           <Route path="/services/tax-preparation" element={<TaxPreparation />} />
           <Route path="/services/accounting" element={<Accounting />} />
           <Route path="/services/business-consulting" element={<BusinessConsulting />} />
-          <Route path="/contact" element={<Contact />} /> {/* Ensure this route is here */}
+          <Route path="/contact" element={<Contact />} /> 
+          <Route path="/signup" element={<SignupForm />} />  {/* Add SignupForm route */}
+          <Route path="/login" element={<LoginForm />} />    {/* Add LoginForm route */}
         </Routes>
-        <Footer /> {/* Add the Footer component here */}
+        <Footer />
       </div>
     </Router>
   );

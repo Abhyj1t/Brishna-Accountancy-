@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.css';
-import logo from '/Users/abhyjitsingh/Documents/GitHub/Brishna-Accountancy-/frontend/src/assests/images/websitelogo.webp'; 
+import logo from '/Users/abhyjitsingh/Documents/GitHub/Brishna-Accountancy-/frontend/src/assests/images/websitelogo.webpcd'; 
 
 const Header = () => {
   return (

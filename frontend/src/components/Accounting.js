@@ -1,20 +1,36 @@
 import React from 'react';
+import './ServicePage.css';
 
 const Accounting = () => {
   return (
-    <div className="service-details">
-      <h1>Accounting</h1>
-      <p>
-        We offer comprehensive accounting services tailored to your needs. Whether it's bookkeeping, financial analysis, or payroll services, we have you covered.
-      </p>
-      <h2>Pricing</h2>
-      <p>Starting from $200/month</p>
-      <h2>FAQs</h2>
-      <ul>
-        <li>Do you offer remote accounting services?</li>
-        <li>Can you help with payroll management?</li>
-      </ul>
-      <p>Contact us for more information or to schedule an appointment.</p>
+    <div className="service-page">
+      <div className="service-header">
+        <h1>Accounting Services</h1>
+        <p>Providing accurate and efficient accounting services for your business.</p>
+      </div>
+      <div className="service-details">
+        <div className="service-section">
+          <h2>Our Expertise</h2>
+          <p>Our certified accountants ensure that your financial records are accurate, timely, and compliant with regulations.</p>
+        </div>
+        <div className="service-section">
+          <h2>Accounting Services</h2>
+          <ul>
+            <li>Financial Statement Preparation</li>
+            <li>Tax Preparation and Filing</li>
+            <li>Payroll Services</li>
+            <li>Audit Support</li>
+          </ul>
+        </div>
+        <div className="testimonial-section">
+          <h2>Client Testimonials</h2>
+          <p>"Brishna Accountancy has streamlined our accounting processes, saving us time and money." - Jane Smith</p>
+        </div>
+        <div className="call-to-action">
+          <a href="/contact" className="cta-button">Contact Us</a>
+          <a href="/services" className="cta-button">Book a Consultation</a>
+        </div>
+      </div>
     </div>
   );
 };

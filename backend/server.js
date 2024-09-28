@@ -113,6 +113,24 @@ app.post('/api/login', (req, res) => {
   );
 });
 
+// Route to handle forgot password
+app.post('/api/forgot-password', (req, res) => {
+  const { email } = req.body;
+
+  // Example: sending a fake email (use an actual email service like Nodemailer)
+  pool.query('SELECT * FROM users WHERE email = $1', [email], (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      res.status(500).json({ error: 'Database error' });
+    } else if (result.rows.length === 0) {
+      res.status(404).json({ error: 'Email not found' });
+    } else {
+      // Logic to send the password reset email
+      res.status(200).json({ message: 'Password reset email sent!' });
+    }
+  });
+});
+
 // Start the server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {

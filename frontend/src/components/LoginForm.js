@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 const LoginForm = () => {
@@ -8,8 +8,8 @@ const LoginForm = () => {
     password: '',
   });
 
-  const [responseMessage, setResponseMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,35 +17,28 @@ const LoginForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const response = await fetch('http://localhost:5001/api/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // Remove the unused 'data' variable
-        setResponseMessage('Login successful!');
-        
-        // Redirect to services page after successful login
-        navigate('/services');
+        // No need to store the response if it's not used
+        navigate('/services'); // Redirect to the services page after successful login
       } else {
-        setResponseMessage('Login failed. Please check your credentials.');
+        setErrorMessage('Invalid email or password');
       }
     } catch (error) {
-      console.error('Error:', error);
-      setResponseMessage('An error occurred. Please try again later.');
+      setErrorMessage('An error occurred. Please try again later.');
     }
   };
 
   return (
     <div className="form-container">
-      <h2>Login</h2>
       <form onSubmit={handleSubmit} className="login-form">
+        <h2>Login</h2>
         <div className="form-group">
           <input
             type="email"
@@ -66,8 +59,11 @@ const LoginForm = () => {
             required
           />
         </div>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit" className="submit-button">Login</button>
-        {responseMessage && <p className={`response-message ${responseMessage.includes('successful') ? 'success-message' : 'error-message'}`}>{responseMessage}</p>}
+        <div className="extra-links">
+          <a href="/forgot-password" className="forgot-password-link">Forgot Password?</a>
+        </div>
       </form>
     </div>
   );

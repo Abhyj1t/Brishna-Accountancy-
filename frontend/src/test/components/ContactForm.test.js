@@ -1,5 +1,3 @@
-// src/components/ContactForm.test.js
-
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -11,10 +9,10 @@ describe('ContactForm Component', () => {
   test('renders ContactForm component', () => {
     render(<ContactForm />);
     
-    // Check if the form and its elements are rendered
-    expect(screen.getByPlaceholderText('Full Name')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Your Message')).toBeInTheDocument();
+    // Check if the form and its elements are rendered with the correct placeholders
+    expect(screen.getByPlaceholderText('Name')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Message')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /send message/i })).toBeInTheDocument();
   });
   
@@ -22,9 +20,9 @@ describe('ContactForm Component', () => {
   test('updates input values on change', () => {
     render(<ContactForm />);
     
-    const nameInput = screen.getByPlaceholderText('Full Name');
-    const emailInput = screen.getByPlaceholderText('Email Address');
-    const messageInput = screen.getByPlaceholderText('Your Message');
+    const nameInput = screen.getByPlaceholderText('Name');
+    const emailInput = screen.getByPlaceholderText('Email');
+    const messageInput = screen.getByPlaceholderText('Message');
     
     fireEvent.change(nameInput, { target: { value: 'John Doe' } });
     fireEvent.change(emailInput, { target: { value: 'john.doe@example.com' } });
@@ -35,23 +33,27 @@ describe('ContactForm Component', () => {
     expect(messageInput.value).toBe('Hello, this is a test message.');
   });
 
-  // Test form submission
-  test('shows alert with message on form submit', () => {
-    // Mock the alert function
-    global.alert = jest.fn();
-
+  // Test form submission and display of success message
+  test('shows success message on form submit', async () => {
     render(<ContactForm />);
     
     // Fill out the form
-    fireEvent.change(screen.getByPlaceholderText('Full Name'), { target: { value: 'John Doe' } });
-    fireEvent.change(screen.getByPlaceholderText('Email Address'), { target: { value: 'john.doe@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText('Your Message'), { target: { value: 'Hello, this is a test message.' } });
+    fireEvent.change(screen.getByPlaceholderText('Name'), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'john.doe@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('Message'), { target: { value: 'Hello, this is a test message.' } });
     
+    // Mock the fetch API to simulate a successful form submission
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+      })
+    );
+
     // Submit the form
     fireEvent.click(screen.getByRole('button', { name: /send message/i }));
     
-    // Check if the alert was called with the correct message
-    expect(global.alert).toHaveBeenCalledWith('Message sent: Hello, this is a test message.');
+    // Check if the success message is displayed
+    const successMessage = await screen.findByText('Message sent successfully!');
+    expect(successMessage).toBeInTheDocument();
   });
-  
 });

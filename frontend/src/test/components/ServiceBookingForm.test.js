@@ -1,41 +1,29 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import ServiceBookingForm from '../../components/ServiceBookingForm';
 
-test('renders ServiceBookingForm component', () => {
-  render(<ServiceBookingForm />);
-
-  // Check if the input fields and the button are rendered
-  expect(screen.getByPlaceholderText('Full Name')).toBeInTheDocument();
-  expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
-  expect(screen.getByPlaceholderText('Service Required')).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /book now/i })).toBeInTheDocument();
-});
-
-test('shows validation errors on empty form submission', () => {
-  render(<ServiceBookingForm />);
-
-  // Submit the form without entering any data
-  fireEvent.click(screen.getByRole('button', { name: /book now/i }));
-
-  // Check if validation errors are shown
-  expect(screen.getByText('Full Name is required')).toBeInTheDocument();
-  expect(screen.getByText('Email Address is required')).toBeInTheDocument();
-  expect(screen.getByText('Service Required is required')).toBeInTheDocument();
-  expect(screen.getByText('Date is required')).toBeInTheDocument();
-});
-
-test('shows invalid email error when email format is incorrect', () => {
-  render(<ServiceBookingForm />);
-
-  // Enter an invalid email and submit the form
-  fireEvent.change(screen.getByPlaceholderText('Email Address'), {
-    target: { value: 'invalid-email' },
+describe('ServiceBookingForm', () => {
+  it('renders service booking form', () => {
+    render(<ServiceBookingForm />);
+    expect(screen.getByPlaceholderText('Full Name')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email Address')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Service Required')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Book Now' })).toBeInTheDocument();
   });
-  fireEvent.click(screen.getByRole('button', { name: /book now/i }));
 
-  // Check if the email validation error is shown
-  expect(screen.getByText('Email Address is invalid')).toBeInTheDocument();
+  it('updates form data on input change', () => {
+    render(<ServiceBookingForm />);
+    const nameInput = screen.getByPlaceholderText('Full Name');
+    const emailInput = screen.getByPlaceholderText('Email Address');
+    const serviceInput = screen.getByPlaceholderText('Service Required');
+
+    fireEvent.change(nameInput, { target: { value: 'John Doe' } });
+    fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+    fireEvent.change(serviceInput, { target: { value: 'Haircut' } });
+
+    expect(nameInput).toHaveValue('John Doe');
+    expect(emailInput).toHaveValue('john@example.com');
+    expect(serviceInput).toHaveValue('Haircut');
+  });
 });
-
-

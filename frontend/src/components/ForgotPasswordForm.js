@@ -1,18 +1,25 @@
-// src/components/ForgotPasswordForm.js
 import React, { useState } from 'react';
 import './ForgotPasswordForm.css'; // Add styling for this form if needed
+import CryptoJS from 'crypto-js'; // Import crypto-js for token generation
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
 
+  // Function to generate a random token (optional)
+  const generateRandomToken = () => {
+    return CryptoJS.lib.WordArray.random(16).toString(); // 16-byte random token
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = generateRandomToken(); // Generate token (optional use)
+    
     try {
       const response = await fetch('http://localhost:5001/api/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, token }), // Send email and token (if needed)
       });
 
       if (response.ok) {

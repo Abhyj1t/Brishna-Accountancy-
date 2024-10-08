@@ -1,15 +1,17 @@
 const express = require('express');
 const cors = require('cors');
-const pool = require('./db'); // Assuming you have set up a connection pool in db.js
+const pool = require('./db'); // Database connection
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
+const bcrypt = require('bcrypt'); // Password hashing
+const crypto = require('crypto'); // Token generation
+const nodemailer = require('nodemailer'); // For sending email
 
 const app = express();
 
-// Enable CORS for all routes
-app.use(cors({ origin: 'http://localhost:3000' })); // Allows requests from localhost:3000
+// Enable CORS
+app.use(cors({ origin: 'http://localhost:3000' }));
 
-// Middleware to parse incoming JSON requests
+// Middleware to parse JSON requests
 app.use(bodyParser.json());
 
 // Route to get all bookings
@@ -41,10 +43,9 @@ app.post('/api/bookings', (req, res) => {
   );
 });
 
-// Route to handle contact form submission
+// Contact form route
 app.post('/api/contact', (req, res) => {
   const { name, email, message } = req.body;
-
   pool.query(
     'INSERT INTO contact_form_submissions (name, email, message) VALUES ($1, $2, $3) RETURNING *',
     [name, email, message],
@@ -59,14 +60,12 @@ app.post('/api/contact', (req, res) => {
   );
 });
 
-// Route to handle signup form submission
+// Signup route
 app.post('/api/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    // Hash password before saving to database
     const hashedPassword = await bcrypt.hash(password, 10);
-
     pool.query(
       'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
       [username, email, hashedPassword],
@@ -85,7 +84,7 @@ app.post('/api/signup', async (req, res) => {
   }
 });
 
-// Route to handle login form submission
+// Login route
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -100,8 +99,6 @@ app.post('/api/login', (req, res) => {
         res.status(404).json({ error: 'User not found' });
       } else {
         const user = result.rows[0];
-
-        // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
           res.status(200).json({ message: 'Login successful', user });
@@ -113,7 +110,7 @@ app.post('/api/login', (req, res) => {
   );
 });
 
-// Create a route to handle forgot password requests
+// Forgot password route
 app.post('/api/forgot-password', async (req, res) => {
   const { email } = req.body;
   try {
@@ -127,9 +124,11 @@ app.post('/api/forgot-password', async (req, res) => {
 
     // Generate a password reset token
     const resetToken = crypto.randomBytes(32).toString('hex');
-    const tokenExpiration = Date.now() + 3600000; // Token valid for 1 hour
+    
+    // Generate a timestamp for token expiration (1 hour from now) in ISO format
+    const tokenExpiration = new Date(Date.now() + 3600000).toISOString(); // ISO format for PostgreSQL
 
-    // Save the reset token and expiration in the database (assume you have `reset_token` and `token_expiry` columns)
+    // Save the reset token and expiration in the database
     await pool.query(
       'UPDATE users SET reset_token = $1, token_expiry = $2 WHERE email = $3',
       [resetToken, tokenExpiration, email]
@@ -138,12 +137,12 @@ app.post('/api/forgot-password', async (req, res) => {
     // Create a reset link to send via email
     const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
 
-    // Send the email
+    // Set up email transporter
     const transporter = nodemailer.createTransport({
-      service: 'Gmail', // You can use any email service
+      service: 'Gmail',
       auth: {
         user: 'your-email@gmail.com',
-        pass: 'your-email-password', // Use environment variables in production
+        pass: 'your-email-password',
       },
     });
 
@@ -153,6 +152,7 @@ app.post('/api/forgot-password', async (req, res) => {
       html: `<p>You requested a password reset</p><p>Click this <a href="${resetLink}">link</a> to reset your password</p>`,
     };
 
+    // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return res.status(500).json({ message: 'Error sending email' });
@@ -165,24 +165,21 @@ app.post('/api/forgot-password', async (req, res) => {
   }
 });
 
+
+// Reset password route
 app.post('/api/reset-password/:token', async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
 
   try {
-    // Find user by token
-    const userQuery = await pool.query('SELECT * FROM users WHERE reset_token = $1 AND token_expiry > $2', [token, Date.now()]);
-    
+    const userQuery = await pool.query('SELECT * FROM users WHERE reset_token = $1 AND token_expiry > $2', [token, Math.floor(Date.now() / 1000)]);
     if (userQuery.rows.length === 0) {
       return res.status(400).json({ message: 'Invalid or expired token' });
     }
 
     const user = userQuery.rows[0];
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Hash the new password (consider using bcrypt)
-    const hashedPassword = password; // Replace this with bcrypt.hash(password) for security
-
-    // Update user's password and clear the reset token
     await pool.query('UPDATE users SET password = $1, reset_token = NULL, token_expiry = NULL WHERE id = $2', [hashedPassword, user.id]);
 
     res.status(200).json({ message: 'Password reset successful' });
@@ -191,7 +188,6 @@ app.post('/api/reset-password/:token', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
 
 // Start the server
 const PORT = process.env.PORT || 5001;

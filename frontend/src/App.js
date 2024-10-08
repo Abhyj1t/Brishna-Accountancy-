@@ -12,6 +12,7 @@ import Accounting from './components/Accounting';
 import BusinessConsulting from './components/BusinessConsulting';
 import SignupForm from './components/SignupForm';  // Import SignupForm
 import LoginForm from './components/LoginForm';    // Import LoginForm
+import ForgotPasswordForm from './components/ForgotPasswordForm';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/contact" element={<Contact />} /> 
           <Route path="/signup" element={<SignupForm />} />  {/* Add SignupForm route */}
           <Route path="/login" element={<LoginForm />} />    {/* Add LoginForm route */}
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         </Routes>
         <Footer />
       </div>

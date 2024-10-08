@@ -113,23 +113,85 @@ app.post('/api/login', (req, res) => {
   );
 });
 
-// Route to handle forgot password
-app.post('/api/forgot-password', (req, res) => {
+// Create a route to handle forgot password requests
+app.post('/api/forgot-password', async (req, res) => {
   const { email } = req.body;
-
-  // Example: sending a fake email (use an actual email service like Nodemailer)
-  pool.query('SELECT * FROM users WHERE email = $1', [email], (err, result) => {
-    if (err) {
-      console.error('Error executing query:', err.stack);
-      res.status(500).json({ error: 'Database error' });
-    } else if (result.rows.length === 0) {
-      res.status(404).json({ error: 'Email not found' });
-    } else {
-      // Logic to send the password reset email
-      res.status(200).json({ message: 'Password reset email sent!' });
+  try {
+    // Check if the user exists
+    const userQuery = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (userQuery.rows.length === 0) {
+      return res.status(404).json({ message: 'Email not found' });
     }
-  });
+
+    const user = userQuery.rows[0];
+
+    // Generate a password reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const tokenExpiration = Date.now() + 3600000; // Token valid for 1 hour
+
+    // Save the reset token and expiration in the database (assume you have `reset_token` and `token_expiry` columns)
+    await pool.query(
+      'UPDATE users SET reset_token = $1, token_expiry = $2 WHERE email = $3',
+      [resetToken, tokenExpiration, email]
+    );
+
+    // Create a reset link to send via email
+    const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+
+    // Send the email
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail', // You can use any email service
+      auth: {
+        user: 'your-email@gmail.com',
+        pass: 'your-email-password', // Use environment variables in production
+      },
+    });
+
+    const mailOptions = {
+      to: email,
+      subject: 'Password Reset',
+      html: `<p>You requested a password reset</p><p>Click this <a href="${resetLink}">link</a> to reset your password</p>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({ message: 'Error sending email' });
+      }
+      res.status(200).json({ message: 'Password reset email sent' });
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
+
+app.post('/api/reset-password/:token', async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    // Find user by token
+    const userQuery = await pool.query('SELECT * FROM users WHERE reset_token = $1 AND token_expiry > $2', [token, Date.now()]);
+    
+    if (userQuery.rows.length === 0) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const user = userQuery.rows[0];
+
+    // Hash the new password (consider using bcrypt)
+    const hashedPassword = password; // Replace this with bcrypt.hash(password) for security
+
+    // Update user's password and clear the reset token
+    await pool.query('UPDATE users SET password = $1, reset_token = NULL, token_expiry = NULL WHERE id = $2', [hashedPassword, user.id]);
+
+    res.status(200).json({ message: 'Password reset successful' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 // Start the server
 const PORT = process.env.PORT || 5001;

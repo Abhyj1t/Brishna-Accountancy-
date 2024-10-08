@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Services from './components/Services';
 import Contact from './components/Contact'; 
+import AboutUs from './components/AboutUs';
 import Header from './components/Header';
 import TaxPreparation from './components/TaxPreparation';
 import Accounting from './components/Accounting';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/signup" element={<SignupForm />} />  {/* Add SignupForm route */}
           <Route path="/login" element={<LoginForm />} />    {/* Add LoginForm route */}
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+          <Route path="/about-us" element={<AboutUs />} /> 
         </Routes>
         <Footer />
       </div>

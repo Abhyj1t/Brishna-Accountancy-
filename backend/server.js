@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt'); // Password hashing
 const crypto = require('crypto'); // Token generation
 const nodemailer = require('nodemailer'); // For sending email
+require('dotenv').config(); // Load environment variables
 
 const app = express();
 
@@ -141,9 +142,11 @@ app.post('/api/forgot-password', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password',
+        user: process.env.EMAIL_USER, // Use environment variables for security
+        pass: process.env.EMAIL_PASS,
       },
+      debug: true,  // Enable debug mode to capture email-related issues
+      logger: true  // Logs email sending activity
     });
 
     const mailOptions = {
@@ -155,6 +158,7 @@ app.post('/api/forgot-password', async (req, res) => {
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
+        console.error('Error sending email:', error);
         return res.status(500).json({ message: 'Error sending email' });
       }
       res.status(200).json({ message: 'Password reset email sent' });
@@ -164,7 +168,6 @@ app.post('/api/forgot-password', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
 
 // Reset password route
 app.post('/api/reset-password/:token', async (req, res) => {

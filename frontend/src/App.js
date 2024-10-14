@@ -14,6 +14,7 @@ import BusinessConsulting from './components/BusinessConsulting';
 import SignupForm from './components/SignupForm';  // Import SignupForm
 import LoginForm from './components/LoginForm';    // Import LoginForm
 import ForgotPasswordForm from './components/ForgotPasswordForm';
+import ResetPassword from './components/ResetPassword';
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
           <Route path="/login" element={<LoginForm />} />    {/* Add LoginForm route */}
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
           <Route path="/about-us" element={<AboutUs />} /> 
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+
         </Routes>
         <Footer />
       </div>

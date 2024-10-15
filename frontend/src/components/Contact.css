@@ -2,13 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 30px; /* Space between the form and the map */
+  gap: 30px;
   margin: 50px auto;
-  max-width: 1200px; /* Adjust based on your page width */
+  max-width: 1200px;
 }
 
 .contact-form-container, .map-container {
-  flex: 1; /* Each element will take up equal space */
+  flex: 1;
 }
 
 .contact-form-container {
@@ -17,6 +17,14 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.map-container {
+  text-align: left;
+}
+
+.map-container p {
+  margin-bottom: 10px;
 }
 
 .map-container iframe {

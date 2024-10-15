@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt'); // Password hashing
 const crypto = require('crypto'); // Token generation
 const nodemailer = require('nodemailer'); // For sending email
-require('dotenv').config(); // Load environment variables
 
 const app = express();
 
@@ -126,12 +125,12 @@ app.post('/api/forgot-password', async (req, res) => {
     // Generate a password reset token
     const resetToken = crypto.randomBytes(32).toString('hex');
     
-    // Generate a timestamp for token expiration (1 hour from now) in ISO format
-    const tokenExpiration = new Date(Date.now() + 3600000).toISOString(); // ISO format for PostgreSQL
+    // Generate a token expiration in seconds (1 hour from now)
+    const tokenExpiration = Math.floor(Date.now() / 1000) + 3600; // 3600 seconds = 1 hour
 
     // Save the reset token and expiration in the database
     await pool.query(
-      'UPDATE users SET reset_token = $1, token_expiry = $2 WHERE email = $3',
+      'UPDATE users SET reset_token = $1, token_expiry = to_timestamp($2) WHERE email = $3',
       [resetToken, tokenExpiration, email]
     );
 
@@ -142,11 +141,9 @@ app.post('/api/forgot-password', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.EMAIL_USER, // Use environment variables for security
-        pass: process.env.EMAIL_PASS,
+        user: 'abhyjitdhillon1801@gmail.com',
+        pass: 'yikl rbep pcnz kkef',
       },
-      debug: true,  // Enable debug mode to capture email-related issues
-      logger: true  // Logs email sending activity
     });
 
     const mailOptions = {
@@ -158,7 +155,6 @@ app.post('/api/forgot-password', async (req, res) => {
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error('Error sending email:', error);
         return res.status(500).json({ message: 'Error sending email' });
       }
       res.status(200).json({ message: 'Password reset email sent' });
@@ -175,7 +171,7 @@ app.post('/api/reset-password/:token', async (req, res) => {
   const { password } = req.body;
 
   try {
-    const userQuery = await pool.query('SELECT * FROM users WHERE reset_token = $1 AND token_expiry > $2', [token, Math.floor(Date.now() / 1000)]);
+    const userQuery = await pool.query('SELECT * FROM users WHERE reset_token = $1 AND token_expiry > to_timestamp($2)', [token, Math.floor(Date.now() / 1000)]);
     if (userQuery.rows.length === 0) {
       return res.status(400).json({ message: 'Invalid or expired token' });
     }
